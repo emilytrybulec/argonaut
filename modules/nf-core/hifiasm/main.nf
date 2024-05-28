@@ -9,7 +9,7 @@ process HIFIASM {
 
     input:
     tuple val(meta), path(hifi_reads)
-    path ont
+    path ont, optional: true
 
 
     output:
@@ -29,7 +29,7 @@ process HIFIASM {
     script:
     def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
-    if(ont){
+    if (ont) {
        """
         hifiasm \\
             $args \\
@@ -61,6 +61,6 @@ process HIFIASM {
         "${task.process}":
             hifiasm: \$(hifiasm --version 2>&1)
         END_VERSIONS
-    
-    """}
+        """
+    }
 }
