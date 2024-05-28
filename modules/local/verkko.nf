@@ -7,26 +7,25 @@ process VERKKO {
         'quay.io/biocontainers/verkko:2.0--h45dadce_0' }"
 
     input:
-    tuple val(meta), path(fasta)
-    path reference
+    tuple val(meta), path(hifi_reads)
+    path ont_reads, optional: true
 
     output:
-    path "ragtag*/*.fasta"                           , emit: scaffolded_assembly
-    tuple val(meta), path("ragtag*/*.stats")                 , emit: summary
-    path  "ragtag*/versions.yml"                           , emit: versions
+    path "asm/assembly.fasta", emit: final_assembly
+    path "asm/assembly.homopolymer-compressed.gfa", emit: final_graph
+    path "asm/assembly*csv", emit: coverage_files
+    path "asm/assembly.scfmap", emit: scaffold_map
+    path "versions.yml", emit: versions
 
     script:
     def VERSION = '2.0'
 
-    """
-    ragtag.py scaffold $reference $fasta -f 1000 -o ragtag_${fasta.baseName}
-
-    cd ragtag_${fasta.baseName}
-    mv ragtag.scaffold.fasta ragtag.scaffold.${fasta.baseName}.fasta
+   """
+    verkko -d asm --hifi ${hifi_reads} ${ont_reads ? '--nano ' + ont_reads : ''}
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        RagTag: $VERSION
+        Verkko: $VERSION
     END_VERSIONS
     """
 }
