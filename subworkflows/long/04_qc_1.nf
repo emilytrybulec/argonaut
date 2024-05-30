@@ -22,6 +22,10 @@ workflow QC_1 {
     main:
 
     ch_versions = Channel.empty() 
+    ch_index = Channel.empty()
+    ch_align_bam = Channel.empty()
+    ch_align_paf = Channel.empty()
+    ch_combo = Channel.empty()
 
     if ( params.shortread == true ) {
         BWAMEM2_INDEX(assemblies)
