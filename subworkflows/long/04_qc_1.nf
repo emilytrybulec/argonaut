@@ -29,8 +29,7 @@ workflow QC_1 {
 
     if ( params.shortread == true ) {
         BWAMEM2_INDEX(assemblies)
-        BWAMEM2_MEM(shortreads, BWAMEM2_INDEX.out.index)
-    }
+        BWAMEM2_MEM(shortreads, BWAMEM2_INDEX.out.index) }
 
     if ( params.longread == true ){
         // build index
@@ -42,8 +41,6 @@ workflow QC_1 {
         MINIMAP2_ALIGN(fastq_filt, assemblies, params.bam_format, params.cigar_paf_format, params.cigar_bam)
         ch_align_bam = MINIMAP2_ALIGN.out.bam
         ch_align_paf = MINIMAP2_ALIGN.out.paf
-
-        ch_align_bam.view() 
 
         fastq_filt
             .map { file -> file }
@@ -69,10 +66,6 @@ workflow QC_1 {
     if ( params.longread == true ){
         SAMTOOLS_INDEX (MINIMAP2_ALIGN.out.bam)
         ch_sam = SAMTOOLS_INDEX.out.sam
-
-        assemblies.view()
-        ch_sam.view()
-        fastq_filt.view()
 
         ch_combo
             .join(ch_sam)
