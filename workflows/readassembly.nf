@@ -591,7 +591,10 @@ workflow GENOMEASSEMBLY {
         }
     }
 
-    OUTPUT (ch_quast, ch_busco, ch_merqury)
+    ch_quast
+        .join(ch_busco, ch_merqury)
+        .set{ch_output}
+    OUTPUT (ch_output)
 
     assembly_stats  =   OUTPUT.out.assemblyStats
 
