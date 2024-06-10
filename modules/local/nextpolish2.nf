@@ -5,11 +5,12 @@ process NEXTPOLISH2 {
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'https://depot.galaxyproject.org/singularity/nextpolish2:0.2.0--hdcf5f25_0' :
         'quay.io/biocontainers/nextpolish2:0.2.0--hdcf5f25_0' }"
-
-   \\  STILL NEED TO EDIT THIS  
-  input:
-    tuple val(meta), path(hifi_reads)
-    path ont_reads, optional: true
+ 
+// NEED TO EDIT FROM HERE DOWN  
+input:
+    tuple val(meta), path(reads)
+    tuple val(meta), path(assembly)
+    
 
     output:
     path "asm/assembly.fasta", emit: final_assembly
