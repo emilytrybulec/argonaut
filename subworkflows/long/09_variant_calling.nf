@@ -1,6 +1,6 @@
 include { LONGSHOT } from '../../modules/local/longshot'
 
-workflow VARIANT CALLING {
+workflow VARIANT_CALLING {
 
     take:
         alignments // channel: val(meta), path(polished assembly bam)
