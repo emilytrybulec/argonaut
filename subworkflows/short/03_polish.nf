@@ -23,7 +23,7 @@ workflow POLISH2 {
         NEXTPOLISH2 (ch_nextpolish2)
 
         flye_assembly_polished = NEXTPOLISH2.out.np2_polished_assembly
-        ch_versions = NextPolish2.out.versions
+        ch_versions = NEXTPOLISH2.out.versions
     } else {
         println "polishing assemblies with short reads using POLCA!"
 
