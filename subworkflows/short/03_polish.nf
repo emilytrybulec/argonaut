@@ -13,7 +13,7 @@ workflow POLISH2 {
     ch_versions = Channel.empty() 
 
     if (hifi_reads != null && !hifi_reads.isEmpty()) {
-        println "polishing assemblies with short reads using Nextpolish2!"
+        println "polishing assemblies with short reads using NextPolish2!"
 
         flye_assembly
             .combine(hifi_reads)
