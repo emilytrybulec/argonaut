@@ -1,4 +1,5 @@
 include { POLCA } from '../../modules/local/polca'  
+include { NextPolish2 } from '../../modules/local/nextpolish2'
 
 workflow POLISH2 {
 
