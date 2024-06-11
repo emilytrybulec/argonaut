@@ -20,9 +20,9 @@ workflow POLISH2 {
             .combine(shortreads)
             .set { ch_nextpolish2 }
 
-        NextPolish2 (ch_nextpolish2)
+        NEXTPOLISH2 (ch_nextpolish2)
 
-        flye_assembly_polished = NextPolish2.out.np2_polished_assembly
+        flye_assembly_polished = NEXTPOLISH2.out.np2_polished_assembly
         ch_versions = NextPolish2.out.versions
     } else {
         println "polishing assemblies with short reads using POLCA!"
