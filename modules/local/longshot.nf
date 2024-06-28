@@ -17,6 +17,8 @@ process LONGSHOT {
 
     script:
     def VERSION = '1.0.0'
+    def prefix = task.ext.prefix ?: "${meta.id}"
+    def args = task.ext.args ?: ''
 
    """
     longshot \\
