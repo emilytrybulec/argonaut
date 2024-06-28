@@ -19,6 +19,8 @@ process VERKKO {
 
     script:
     def VERSION = '2.0'
+    def prefix = task.ext.prefix ?: "${meta.id}"
+    def args = task.ext.args ?: ''
 
    """
     verkko -d asm --hifi ${hifi_reads} ${ont_reads ? '--nano ' + ont_reads : ''}
