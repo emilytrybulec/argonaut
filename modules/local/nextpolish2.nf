@@ -18,6 +18,8 @@ input:
 
     script:
     def VERSION = '0.2.0'
+    def prefix = task.ext.prefix ?: "${meta.id}"
+    def args = task.ext.args ?: ''
 
    """
    // prepare HiFi mapping file using winnowmap
