@@ -9,7 +9,7 @@ include { SAMTOOLS_INDEX } from '../../modules/nf-core/samtools/index/main'
 include { BWAMEM2_INDEX } from '../../modules/nf-core/bwamem2/index/main' 
 include { BWAMEM2_MEM } from '../../modules/nf-core/bwamem2/mem/main' 
 
-workflow QC_4 {
+workflow QC_5 {
 
     take:
         assemblies // channel: [ val(meta), path(assemblies) ]
