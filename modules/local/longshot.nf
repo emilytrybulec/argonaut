@@ -24,10 +24,18 @@ process LONGSHOT {
     longshot \\
         --bam ${bam_file} \\
         --ref ${reference_fasta} \\
-        --out output.vcf 
+        --out output.vcf \\
+        ${args} \\
+        --threads $task.cpus
 
   \\ to get haplotype-seperated BAM
-  longshot --bam ${bam)file} --ref ${reference_fasta} --out output.vcf --out_bam haplotype_seperated.bam
+  longshot \\
+        --bam ${bam_file} \\
+        --ref ${reference_fasta} \\
+        --out output.vcf \\
+        --out_bam haplotype_seperated.bam \\
+        ${args} \\
+        --threads $task.cpus
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
