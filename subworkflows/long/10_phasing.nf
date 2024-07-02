@@ -3,8 +3,8 @@ include { PILON } from '../../modules/nf-core/pilon'
 workflow PHASING {
 
     take:
-        assemblies // channel: tuple(val(meta), path(vcf))
-        alignments // channel: tuple(val(meta_bam), path(bam), path(bai))
+        assemblies // channel: tuple(val(meta), path(fasta))
+        alignments // channel: tuple(val(meta_bam), path(bam), path(bai)) 
         reference
         pilon_mode
 
