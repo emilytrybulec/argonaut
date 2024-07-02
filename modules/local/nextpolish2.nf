@@ -35,7 +35,11 @@ input:
     yak count -o k31.yak -k 31 -b 37 <(zcat ${shortreads[0]}) <(zcat ${shortreads[1]})
 
     // run nextpolish2
-    nextPolish2 -t 5 hifi.map.sort.bam ${assembly} k21.yak k31.yak > np2_${meta.id}.np2.fa
+    nextPolish2 \\
+        -t $task.cpus \\
+        hifi.map.sort.bam ${assembly} k21.yak k31.yak \\
+        ${args} \\
+        > np2_${meta.id}.np2.fa
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
