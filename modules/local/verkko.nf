@@ -23,7 +23,12 @@ process VERKKO {
     def args = task.ext.args ?: ''
 
    """
-    verkko -d asm --hifi ${hifi_reads} ${ont_reads ? '--nano ' + ont_reads : ''}
+    verkko \\
+        -d asm \\
+        --hifi ${hifi_reads} \\
+        ${ont_reads ? '--nano ' + ont_reads : ''} \\
+        ${args} \\
+        --threads $task.cpus
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
