@@ -11,8 +11,11 @@ workflow VARIANT_CALLING {
     ch_versions = Channel.empty()
         println "variant calling with longshot!"
 
-    alignments
-        .map { tuple(meta, bam) -> tuple(meta, bam, reference) }
+    alignments = alignments
+        .map { tuple(meta, bam) -> tuple(meta, bam, bam + ".bai") }
+        .each { meta, bam, bai -> "samtools index $bam".execute().waitFor() }
+        .map { meta, bam -> tuple(meta, bam, bam + ".bai") }
+        .map { tuple(meta, bam, bai) -> tuple(meta, bam, reference) }
         .set {longshot_input}
 
     LONGSHOT(longshot_input)
@@ -25,7 +28,7 @@ workflow VARIANT_CALLING {
         .set { phased_variants }
 
     hap_bam
-        .map { meta, file -> tuple(meta, file) }
+        .map { meta, bam, bai -> tuple(meta, bam, bai) }
         .set { haplotype_bam }
 
     emit: 
