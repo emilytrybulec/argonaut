@@ -18,9 +18,9 @@ workflow PHASING {
         }
         .set { pilon_input }
         PILON (pilon_input)
-        pilon_assemblies = PILON.out.assembly
+        pilon_improved_assemblies = PILON.out.improved_assembly
 
-        pilon_assemblies
+        pilon_improved_assemblies
             .map { meta, file -> tuple(meta, file) }
             .set {phased_assemblies } 
         
