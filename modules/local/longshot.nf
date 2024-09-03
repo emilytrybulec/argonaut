@@ -8,11 +8,11 @@ process LONGSHOT {
 
     input:
     tuple val(meta), path(bam_file)
-    path reference_fasta
+    path reference
 
     output:
     path "output.vcf", emit: vcf
-    path "haplotype_seperated.bam", emit: hap_bam, optional: true
+    path "haplotype_seperated.bam", emit: hap_bam
     path "versions.yml", emit: versions
 
     script:
@@ -23,15 +23,7 @@ process LONGSHOT {
    """
     longshot \\
         --bam ${bam_file} \\
-        --ref ${reference_fasta} \\
-        --out output.vcf \\
-        ${args} \\
-        --threads $task.cpus
-
-  \\ to get haplotype-seperated BAM
-  longshot \\
-        --bam ${bam_file} \\
-        --ref ${reference_fasta} \\
+        --ref ${reference} \\
         --out output.vcf \\
         --out_bam haplotype_seperated.bam \\
         ${args} \\
