@@ -15,3 +15,4 @@ masurca_config         :  "/core/projects/EBP/conservation/gen_assembly_pipeline
 taxon_taxid            : "2488345"
 taxon_taxdump          : "/core/projects/EBP/conservation/gen_assembly_pipeline/nextflow_dev/ncbi_taxdump"
 blast_db               : "/isg/shared/databases/blast/v5/nt"
+pilon_mode             : "bam"
