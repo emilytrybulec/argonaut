@@ -5,8 +5,7 @@ include { COVERAGE_LR } from '../../modules/local/coverage_lr'
 include { FLYE } from '../../modules/nf-core/flye/main' 
 include { MASURCA } from '../../modules/local/masurca'
 include { CANU } from '../../modules/nf-core/canu/main' 
-include { HIFIASM } from '../../modules/nf-core/hifiasm/main'
-include { VERKKO } from '../../modules/local/verkko' 
+include { HIFIASM } from '../../modules/nf-core/hifiasm/main' 
 
 
 workflow ASSEMBLY {
@@ -107,19 +106,6 @@ workflow ASSEMBLY {
             hifi_assembly = Channel.empty() 
         }
 
-        if (params.verkko == true) {
-            println "assembling long reads with verkko!"
-            VERKKO(hifi_reads, ont_reads)
-            verkko_assembly = VERKKO.out.final_assembly
-
-            verkko_asembly
-                .map { file -> tuple(id: file.baseName, file) }
-                .set { v_assembly }
-        } else {
-            verkko_assembly = Channel.empty()
-            v_assembly = Channel.empty()
-        } 
-
         if ( params.ex_assembly == true ) {
             println "inputting existing assembly!"
             existing_assembly = Channel.fromPath(params.existing_assembly)
@@ -135,18 +121,18 @@ workflow ASSEMBLY {
         no_meta_assemblies = Channel.empty()
 
         no_meta_assemblies
-            .concat(flye_assembly, canu_assembly, masurca_assembly, hifi_assembly, verkko_assembly, existing_assembly)
+            .concat(flye_assembly, canu_assembly, masurca_assembly, hifi_assembly, existing_assembly)
             .collect()
             .set { all_assemblies_no_meta }
 
         no_meta_assemblies
-            .concat(flye_assembly, canu_assembly, masurca_assembly, hifi_assembly, verkko_assembly, existing_assembly)
+            .concat(flye_assembly, canu_assembly, masurca_assembly, hifi_assembly, existing_assembly)
             .flatten()
             .map { file -> tuple(id: file.baseName, file) }
             .set { all_assemblies }
 
         no_meta_assemblies
-            .concat(flye_assembly, canu_assembly, masurca_assembly, hifi_assembly, verkko_assembly, existing_assembly)
+            .concat(flye_assembly, canu_assembly, masurca_assembly, hifi_assembly, existing_assembly)
             .set{blob_test}
 
     emit:
