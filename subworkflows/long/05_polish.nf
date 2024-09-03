@@ -1,5 +1,6 @@
 include { MEDAKA } from '../../modules/nf-core/medaka/main'  
-include { RACON } from '../../modules/nf-core/racon/main'  
+include { RACON } from '../../modules/nf-core/racon/main'
+include { PILON } from '../../modules/nf-core/pilon/main'
 
 workflow POLISH {
 
@@ -11,6 +12,8 @@ workflow POLISH {
         ch_racon
         no_meta_ont
         no_meta_pb
+        alignments
+        pilon_mode
     main:
 
     ch_versions = Channel.empty() 
@@ -62,6 +65,83 @@ workflow POLISH {
                 .map { file -> tuple(id: file.baseName, file)  }
                 .set { assembly_polished }
         } 
+
+        if (params.pilon_polish == true && params.racon_polish == true && params.medaka_polish == false) { 
+           println "polishing racon-polished assemblies with pilon!"
+           racon_polished_assembly.join(alignments)
+             .combine(pilon_mode)
+             .set{pilon_input}
+
+           PILON(pilon_input)
+ 
+        ch_versions = ch_versions.mix(PILON.out.assembly)
+        
+           pilon_improved_assembly = PILON.out.improved_assembly
+
+           pilon_improved_assembly
+               .map { file -> tuple(id: file.baseName, file)  }
+               .set { pilon_polished_assembly } 
+       
+           pilon_improved_assembly 
+               .concat(no_meta_polished_assembly)
+               .set{no_meta_polished_assembly}
+      
+       } else if (params.pilon_polish == true && params.racon_polish == false && params.medaka_polish == true) {
+           println "polishing medaka-polished assemblies with pilon!"
+           assembly_polished.join(alignments)
+             .combine(pilon_mode)
+             .set{pilon_input}
+          
+           PILON(pilon_input)
+        
+        ch_versions = ch_versions.mix(PILON.out.assembly)
+        
+           pilon_improved_assembly = PILON.out.improved_assembly
+        
+           pilon_improved_assembly
+               .map { file -> tuple(id: file.baseName, file)  }
+               .set { pilon_polished_assembly }
+  
+           pilon_improved_assembly
+               .concat(no_meta_polished_assembly)
+               .set{no_meta_polished_assembly}
+
+       } else if (params.pilon == true && params.racon_polish == true && params.medaka_polish == true) {
+           println "polishing racon-and-medaka-polished assemblies with pilon!"
+           medaka_assembly_polished.join(alignments) 
+             .combine(pilon_mode)
+             .set{pilon_input}
+             
+           PILON(pilon_input)
+           
+        ch_versions = ch_versions.mix(PILON.out.assembly)
+        
+           pilon_improved_assembly = PILON.out.improved_assembly
+
+           pilon_improved_assembly
+               .map { file -> tuple(id: file.baseName, file)  }
+               .set { pilon_polished_assembly }
+
+           pilon_improved_assembly
+               .concat(no_meta_polished_assembly)
+               .set{no_meta_polished_assembly}
+
+        } else if (params.pilon == true && params.racon_polish == false && params.medaka_polish == false) { 
+            println "polishing assemblies with pilon!"
+            assembly.join(alignments) 
+             .combine(pilon_mode)
+             .set{pilon_input}
+             
+           PILON(pilon_input)
+
+        ch_versions = ch_versions.mix(PILON.out.assembly)
+
+           pilon_improved_assembly = PILON.out.improved_assembly
+
+           pilon_improved_assembly 
+               .map { file -> tuple(id: file.baseName, file)  }
+               .set { pilon_polished_assembly }
+        }
         
     emit:
     
