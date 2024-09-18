@@ -269,7 +269,7 @@ workflow GENOMEASSEMBLY {
 
     //short read only assembly
     if ( params.shortread == true && params.masurca == true && params.longread == false){
-        if (params.masurca_sr_adv == true){
+        if (params.masurca_config != null){
             ch_config = Channel.fromPath(params.masurca_config)
             MASURCA_SR_ADV (ch_config)
             println "assembling short reads with maSuRCA!"
