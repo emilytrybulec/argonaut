@@ -7,18 +7,17 @@ process MASURCA_LR_ADV {
     path config
 
     output:
-    path("SOAP_a*/masurca*")                , emit: fasta
-    path ("SOAP_a*/versions.yml")                , emit: versions
+    path("masurca*")                , emit: fasta
+    path ("*/versions.yml")                , emit: versions
 
     script:
     def VERSION = '4.1.0'
-    def prefix = task.ext.prefix ?: "masurca_sr_only"
+    def prefix = task.ext.prefix ?: "masurca"
     """
     masurca $config
     ./assemble.sh > masurca_advanced.log
 
-    cd SOAP_assembly
-    mv asm2.scafSeq2 ${prefix}.fasta
+    mv CA*/primary.genome.scf.fasta ${prefix}.fasta
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
