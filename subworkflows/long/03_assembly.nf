@@ -4,6 +4,7 @@ include { TOTAL_BASES_LR } from '../../modules/local/total_bases_lr'
 include { COVERAGE_LR } from '../../modules/local/coverage_lr'
 include { FLYE } from '../../modules/nf-core/flye/main' 
 include { MASURCA } from '../../modules/local/masurca'
+include { MASURCA_LR_ADV } from '../../modules/local/masurca_lr_adv'
 include { CANU } from '../../modules/nf-core/canu/main' 
 include { HIFIASM } from '../../modules/nf-core/hifiasm/main' 
 include { VERKKO } from '../../modules/local/verkko'
@@ -83,7 +84,7 @@ workflow ASSEMBLY {
         if ( params.masurca == true) {
             println "hybrid assembly with maSuRCA!"
 
-            if(params.masurca_adv == true){
+            if(params.masurca_config != null){
                 MASURCA_LR_ADV(params.masurca_config) } 
             else if (params.ONT_lr == true && params.PacBioHifi_lr == true  && params.shortread == true) {
                 MASURCA(combined_longreads, shortreads)
