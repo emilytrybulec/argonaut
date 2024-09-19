@@ -101,10 +101,12 @@ workflow QC_4 {
             }
         }
 
-        if ( params.longread == true ){
-            SAMTOOLS_INDEX (ch_bam)
-        } else if ( params.shortread == true ){ 
-            SAMTOOLS_INDEX (BWAMEM2_MEM.out.bam)}
+        //if ( params.longread == true ){
+         //   SAMTOOLS_INDEX (ch_bam)
+        //} else if ( params.shortread == true ){ 
+        //    SAMTOOLS_INDEX (BWAMEM2_MEM.out.bam)}
+
+        ch_index = Channel.empty()
 
         assemblies
             .combine(ch_meryl)
@@ -123,7 +125,7 @@ workflow QC_4 {
         ch_versions = ch_versions.mix(MERQURY.out.versions)
 
     emit:
-        ch_index = SAMTOOLS_INDEX.out.bai
+        ch_index 
         ch_quast
         ch_busco
         ch_merqury
