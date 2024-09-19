@@ -85,13 +85,15 @@ workflow ASSEMBLY {
             println "hybrid assembly with maSuRCA!"
 
             if(params.masurca_config != null){
-                MASURCA_LR_ADV(params.masurca_config) } 
+                MASURCA_LR_ADV(params.masurca_config) 
+                masurca_assembly    = MASURCA_LR_ADV.out.fasta} 
             else if (params.ONT_lr == true && params.PacBioHifi_lr == true  && params.shortread == true) {
                 MASURCA(combined_longreads, shortreads)
+                masurca_assembly    = MASURCA.out.fasta
             } else if (params.shortread == true){
-                MASURCA(longreads, shortreads) }
-
-            masurca_assembly    = MASURCA.out.fasta
+                MASURCA(longreads, shortreads) 
+                masurca_assembly    = MASURCA.out.fasta
+            } else {masurca_assembly = Channel.empty()}
 
             masurca_assembly
                 .map { file -> tuple(id: file.simpleName, file)  }
