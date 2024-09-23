@@ -5,7 +5,7 @@ process OUTPUT {
     tuple val(meta), path(ch_quast_tsv), path(ch_busco), path(ch_merqury)
 
     output:
-    path("*.assemblyStats.txt")       , emit: assemblyStats
+    tuple val(meta), path("*.assemblyStats.txt")       , emit: assemblyStats
    
     script: 
     def prefix 
