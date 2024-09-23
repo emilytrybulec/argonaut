@@ -32,12 +32,6 @@ fragmented_buscos=\$(grep "Fragmented BUSCOs" "$input_file" | awk '{print \$1}')
 missing_buscos=\$(grep "Missing BUSCOs" "$input_file" | awk '{print \$1}')
 total_buscos=\$(grep "Total BUSCO groups searched" "$input_file" | awk '{print \$1}')
 
-num_scaffolds=\$(grep "Number of scaffolds" "$input_file" | awk '{print \$1}')
-num_contigs=\$(grep "Number of contigs" "$input_file" | awk '{print \$1}')
-scaffold_n50=\$(grep "Scaffold N50" "$input_file" | awk '{print \$1}')
-contigs_n50=\$(grep "Contigs N50" "$input_file" | awk '{print \$1}')
-percent_gaps=\$(grep "Percent gaps" "$input_file" | awk '{print \$1}')
-
 merqury_score=\$(sed -n '46p' "$input_file" | awk '{print \$1}')
 
 
