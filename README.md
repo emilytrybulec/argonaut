@@ -88,7 +88,7 @@ chr3_gibbon_ont,/core/projects/EBP/conservation/gen_assembly_pipeline/hoolock_ch
 chr3_gibbon_ill,/core/projects/EBP/conservation/gen_assembly_pipeline/hoolock_chrm_3/chr3_ill_R1.paired.fastq.gz,/core/projects/EBP/conservation/gen_assembly_pipeline/hoolock_chrm_3/chr3_ill_R2.paired.fastq.gz,FALSE,ill
 ```
 
-!!! PLEASE ADD "ont", "pb", AND/OR "ill" TO YOUR SAMPLES NAMES !!! Failure to do so may result in assemblers not recognizing your read type and/or outputs being overwritten.
+!!! PLEASE ADD "ont", "pb", AND/OR "ill" TO YOUR SAMPLE NAMES AND FILE NAMES!!! Failure to do so may result in assemblers not recognizing your read type and/or outputs being overwritten.
 
 The sample name inputted in your samplesheet will serve as the prefix for your output files. Please indicate which kind of read is being inputted in the sample name, as well as the read type column. 
 
