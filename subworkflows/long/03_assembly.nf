@@ -24,7 +24,7 @@ workflow ASSEMBLY {
     main:
     ch_versions = Channel.empty() 
 
-        if (params.ONT_lr_herrocorrected == false || params.PacBioHifi_lr == true) {
+        if (params.ONT_lr_herrocorrected == false && params.PacBioHifi_lr == true && params.ONT_lr == true) {
         //makes sure long read input is filtered reads
         NANOPLOT (longreads)
         nanoplot_filtered_out   = NANOPLOT.out.html
@@ -35,7 +35,30 @@ workflow ASSEMBLY {
             .combine(genome_size_est_long)
             .set{ch_cov}
 
-        COVERAGE_LR(ch_cov) } else {nanoplot_filtered_out = Channel.empty()}
+        COVERAGE_LR(ch_cov) } 
+        else if (params.ONT_lr_herrocorrected == true && params.PacBioHifi_lr == true){
+            NANOPLOT (pacbio_reads)
+        nanoplot_filtered_out   = NANOPLOT.out.html
+
+        TOTAL_BASES_LR(NANOPLOT.out.txt)
+
+        TOTAL_BASES_LR.out.total_bases
+            .combine(genome_size_est_long)
+            .set{ch_cov}
+
+        COVERAGE_LR(ch_cov)
+        } else if (params.ONT_lr_herrocorrected == false && params.PacBioHifi_lr == false && params.ONT_lr == true){
+        NANOPLOT (longreads)
+        nanoplot_filtered_out   = NANOPLOT.out.html
+
+        TOTAL_BASES_LR(NANOPLOT.out.txt)
+
+        TOTAL_BASES_LR.out.total_bases
+            .combine(genome_size_est_long)
+            .set{ch_cov}
+
+        COVERAGE_LR(ch_cov)
+        } else{nanoplot_filtered_out = Channel.empty()}
 
         assemblies = Channel.empty() 
         
