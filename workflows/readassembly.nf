@@ -512,18 +512,18 @@ workflow GENOMEASSEMBLY {
     if ( params.medaka_polish == true || params.racon_polish == true || params.pilon == true || params.polca == true) {
         if ( params.shortread == true && params.longread == true ) {
             if(params.PacBioHifi_lr == true){
-                QC_2 (polished_assemblies, ch_PacBiolongreads, ch_summtxt, QC_1.out[3], QC_1.out[4], QC_1.out[5], READ_QC2.out[0], QC_1.out[2], full_size, QC_1.out[7], no_meta_ch_PB, QC_1.out[11])
+                QC_2 (polished_assemblies, ch_PacBiolongreads, ch_summtxt, QC_1.out[3], QC_1.out[4], QC_1.out[5], READ_QC2.out[0], QC_1.out[2], full_size, QC_1.out[7], no_meta_ch_PB, QC_1.out[11], QC_1.out[12])
             } else {
-                QC_2 (polished_assemblies, ch_ONTlongreads, ch_summtxt, QC_1.out[3], QC_1.out[4], QC_1.out[5], READ_QC2.out[0], QC_1.out[2], full_size, QC_1.out[7], no_meta_ch_ONT, QC_1.out[11])}
+                QC_2 (polished_assemblies, ch_ONTlongreads, ch_summtxt, QC_1.out[3], QC_1.out[4], QC_1.out[5], READ_QC2.out[0], QC_1.out[2], full_size, QC_1.out[7], no_meta_ch_ONT, QC_1.out[11], QC_1.out[12])}
             ch_versions = ch_versions.mix(QC_2.out.versions)
         } else if ( params.longread == true && params.shortread == false ) {
             if(params.PacBioHifi_lr == true){
-                QC_2 (polished_assemblies, ch_PacBiolongreads, ch_summtxt, QC_1.out[3], QC_1.out[4], QC_1.out[5], [], QC_1.out[2], full_size, QC_1.out[7], no_meta_ch_PB, QC_1.out[11])
+                QC_2 (polished_assemblies, ch_PacBiolongreads, ch_summtxt, QC_1.out[3], QC_1.out[4], QC_1.out[5], [], QC_1.out[2], full_size, QC_1.out[7], no_meta_ch_PB, QC_1.out[11, QC_1.out[12]])
             } else {
-                QC_2 (polished_assemblies, ch_ONTlongreads, ch_summtxt, QC_1.out[3], QC_1.out[4], QC_1.out[5], [], QC_1.out[2], full_size, QC_1.out[7], no_meta_ch_ONT, QC_1.out[11])}
+                QC_2 (polished_assemblies, ch_ONTlongreads, ch_summtxt, QC_1.out[3], QC_1.out[4], QC_1.out[5], [], QC_1.out[2], full_size, QC_1.out[7], no_meta_ch_ONT, QC_1.out[11], QC_1.out[12])}
             ch_versions = ch_versions.mix(QC_2.out.versions)
         } else if ( params.shortread == true && params.longread == false ) {
-            QC_2 (polished_assemblies, READ_QC2.out[0], ch_summtxt, QC_1.out[3], QC_1.out[4], QC_1.out[5], READ_QC2.out[0], QC_1.out[2], full_size, QC_1.out[7], [], QC_1.out[11])
+            QC_2 (polished_assemblies, READ_QC2.out[0], ch_summtxt, QC_1.out[3], QC_1.out[4], QC_1.out[5], READ_QC2.out[0], QC_1.out[2], full_size, QC_1.out[7], [], QC_1.out[11], QC_1.out[12])
     } 
     busco_tsv
         .concat(QC_2.out[6]) 
