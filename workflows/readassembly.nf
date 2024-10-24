@@ -729,20 +729,11 @@ workflow GENOMEASSEMBLY {
         }
     }
 
-    ch_merqury
-        .first()
-        .set{merqury_qv}
-
-    ch_merqury
-        .last()
-        .set{merqury_completeness}
-
-    merqury_qv.view()
     
     ch_quast
         .join(ch_busco, by: 0)
-        .join(merqury_qv, by:0)
-        .join(merqury_completeness, by:0)
+        .join(ch_merqury, by:0)
+        .join(ch_merqury_comp, by:0)
         .set{ch_output}
 
     OUTPUT (ch_output)
