@@ -731,6 +731,8 @@ workflow GENOMEASSEMBLY {
         .last()
         .set{merqury_completeness}
 
+    merqury_qv.view()
+    
     ch_quast
         .join(ch_busco, by: 0)
         .join(merqury_qv, by:0)
