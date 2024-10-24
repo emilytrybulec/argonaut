@@ -533,11 +533,13 @@ workflow GENOMEASSEMBLY {
     qc_quast = QC_2.out[3]
     qc_busco = QC_2.out[4]
     qc_merqury = QC_2.out[5]
+    qc_merqury_comp = QC_2.out[7]
     } else {
     bam_2 = Channel.empty()
     qc_quast = QC_1.out[3]
     qc_busco = QC_1.out[4]
     qc_merqury = QC_1.out[5]
+    qc_merqury_comp = QC_1.out[12]
     }
         
 
@@ -583,17 +585,17 @@ workflow GENOMEASSEMBLY {
     if ( params.purge == true ) {
         if ( params.shortread == true && params.longread == true) {
             if (params.PacBioHifi_lr == true) {
-                QC_3 (purged_assemblies_common, ch_PacBiolongreads, ch_summtxt, qc_quast, qc_busco, qc_merqury, READ_QC2.out[0], full_size, QC_1.out[7], no_meta_ch_PB, QC_1.out[11])
+                QC_3 (purged_assemblies_common, ch_PacBiolongreads, ch_summtxt, qc_quast, qc_busco, qc_merqury, READ_QC2.out[0], full_size, QC_1.out[7], no_meta_ch_PB, QC_1.out[11], qc_merqury_comp)
             } else {
-            QC_3 (purged_assemblies_common, ch_PacBiolongreads, ch_summtxt, qc_quast, qc_busco, qc_merqury, READ_QC2.out[0], full_size, QC_1.out[7], no_meta_ch_ONT, QC_1.out[11])}
+            QC_3 (purged_assemblies_common, ch_PacBiolongreads, ch_summtxt, qc_quast, qc_busco, qc_merqury, READ_QC2.out[0], full_size, QC_1.out[7], no_meta_ch_ONT, QC_1.out[11], qc_merqury_comp)}
     ch_versions = ch_versions.mix(QC_3.out.versions)
     } else if ( params.longread == true && params.shortread == false) {
         if(params.PacBioHifi_lr == true){
-            QC_3 (purged_assemblies_common, ch_PacBiolongreads, ch_summtxt, qc_quast, qc_busco, qc_merqury, [], full_size, QC_1.out[7], no_meta_ch_PB, QC_1.out[11])
+            QC_3 (purged_assemblies_common, ch_PacBiolongreads, ch_summtxt, qc_quast, qc_busco, qc_merqury, [], full_size, QC_1.out[7], no_meta_ch_PB, QC_1.out[11], qc_merqury_comp)
         } else {
-            QC_3 (purged_assemblies_common, ch_PacBiolongreads, ch_summtxt, qc_quast, qc_busco, qc_merqury, [], full_size, QC_1.out[7], no_meta_ch_ONT, QC_1.out[11])}
+            QC_3 (purged_assemblies_common, ch_PacBiolongreads, ch_summtxt, qc_quast, qc_busco, qc_merqury, [], full_size, QC_1.out[7], no_meta_ch_ONT, QC_1.out[11], qc_merqury_comp)}
     } else if ( params.shortread == true && params.longread == false) {
-        QC_3 (purged_assemblies_common, READ_QC2.out[0], ch_summtxt, qc_quast, qc_busco, qc_merqury, READ_QC2.out[0], full_size, QC_1.out[7], [], QC_1.out[11])
+        QC_3 (purged_assemblies_common, READ_QC2.out[0], ch_summtxt, qc_quast, qc_busco, qc_merqury, READ_QC2.out[0], full_size, QC_1.out[7], [], QC_1.out[11], qc_merqury_comp)
     } 
     busco_tsv
         .concat(QC_3.out[5]) 
@@ -607,7 +609,8 @@ workflow GENOMEASSEMBLY {
         if (params.purge == true){
         qc_quast = QC_3.out[1]
         qc_busco = QC_3.out[2]
-        qc_merqury = QC_3.out[3]} 
+        qc_merqury = QC_3.out[3]
+        qc_merqury_comp = QC_3.out[5]} 
 
         ch_reference = Channel.fromPath(params.ragtag_reference)
 
