@@ -1,0 +1,172 @@
+{
+    "name": "nf-core/genomeassembly",
+    "homePage": "https://github.com/nf-core/genomeassembly",
+    "repos": {
+        "https://github.com/nf-core/modules.git": {
+            "modules": {
+                "nf-core": {
+                    "bioawk": {
+                        "branch": "master",
+                        "git_sha": "911696ea0b62df80e900ef244d7867d177971f73",
+                        "installed_by": ["modules"]
+                    },
+                    "busco": {
+                        "branch": "master",
+                        "git_sha": "911696ea0b62df80e900ef244d7867d177971f73",
+                        "installed_by": ["modules"]
+                    },
+                    "bwamem2/index": {
+                        "branch": "master",
+                        "git_sha": "911696ea0b62df80e900ef244d7867d177971f73",
+                        "installed_by": ["modules"]
+                    },
+                    "bwamem2/mem": {
+                        "branch": "master",
+                        "git_sha": "0460d316170f75f323111b4a2c0a2989f0c32013",
+                        "installed_by": ["modules"]
+                    },
+                    "canu": {
+                        "branch": "master",
+                        "git_sha": "911696ea0b62df80e900ef244d7867d177971f73",
+                        "installed_by": ["modules"]
+                    },
+                    "centrifuge/centrifuge": {
+                        "branch": "master",
+                        "git_sha": "911696ea0b62df80e900ef244d7867d177971f73",
+                        "installed_by": ["modules"]
+                    },
+                    "centrifuge/kreport": {
+                        "branch": "master",
+                        "git_sha": "911696ea0b62df80e900ef244d7867d177971f73",
+                        "installed_by": ["modules"]
+                    },
+                    "custom/dumpsoftwareversions": {
+                        "branch": "master",
+                        "git_sha": "76cc4938c1f6ea5c7d83fed1eeffc146787f9543",
+                        "installed_by": ["modules"]
+                    },
+                    "fastp": {
+                        "branch": "master",
+                        "git_sha": "d497a4868ace3302016ea8ed4b395072d5e833cd",
+                        "installed_by": ["modules"]
+                    },
+                    "fastqc": {
+                        "branch": "master",
+                        "git_sha": "c8e35eb2055c099720a75538d1b8adb3fb5a464c",
+                        "installed_by": ["modules"]
+                    },
+                    "flye": {
+                        "branch": "master",
+                        "git_sha": "911696ea0b62df80e900ef244d7867d177971f73",
+                        "installed_by": ["modules"]
+                    },
+                    "genomescope2": {
+                        "branch": "master",
+                        "git_sha": "911696ea0b62df80e900ef244d7867d177971f73",
+                        "installed_by": ["modules"]
+                    },
+                    "gunzip": {
+                        "branch": "master",
+                        "git_sha": "5c460c5a4736974abde2843294f35307ee2b0e5e",
+                        "installed_by": ["modules"]
+                    },
+                    "hifiasm": {
+                        "branch": "master",
+                        "git_sha": "911696ea0b62df80e900ef244d7867d177971f73",
+                        "installed_by": ["modules"]
+                    },
+                    "kraken2/kraken2": {
+                        "branch": "master",
+                        "git_sha": "603ecbd9f45300c9788f197d2a15a005685b4220",
+                        "installed_by": ["modules"]
+                    },
+                    "medaka": {
+                        "branch": "master",
+                        "git_sha": "911696ea0b62df80e900ef244d7867d177971f73",
+                        "installed_by": ["modules"]
+                    },
+                    "merqury": {
+                        "branch": "master",
+                        "git_sha": "911696ea0b62df80e900ef244d7867d177971f73",
+                        "installed_by": ["modules"]
+                    },
+                    "meryl/count": {
+                        "branch": "master",
+                        "git_sha": "911696ea0b62df80e900ef244d7867d177971f73",
+                        "installed_by": ["modules"]
+                    },
+                    "minimap2/align": {
+                        "branch": "master",
+                        "git_sha": "603ecbd9f45300c9788f197d2a15a005685b4220",
+                        "installed_by": ["modules"]
+                    },
+                    "minimap2/index": {
+                        "branch": "master",
+                        "git_sha": "911696ea0b62df80e900ef244d7867d177971f73",
+                        "installed_by": ["modules"]
+                    },
+                    "multiqc": {
+                        "branch": "master",
+                        "git_sha": "f2d63bd5b68925f98f572eed70993d205cc694b7",
+                        "installed_by": ["modules"]
+                    },
+                    "mummer": {
+                        "branch": "master",
+                        "git_sha": "9e51255c4f8ec69fb6ccf68593392835f14fecb8",
+                        "installed_by": ["modules"]
+                    },
+                    "nanoplot": {
+                        "branch": "master",
+                        "git_sha": "911696ea0b62df80e900ef244d7867d177971f73",
+                        "installed_by": ["modules"]
+                    },
+                    "purgedups/calcuts": {
+                        "branch": "master",
+                        "git_sha": "911696ea0b62df80e900ef244d7867d177971f73",
+                        "installed_by": ["modules"]
+                    },
+                    "purgedups/pbcstat": {
+                        "branch": "master",
+                        "git_sha": "911696ea0b62df80e900ef244d7867d177971f73",
+                        "installed_by": ["modules"]
+                    },
+                    "purgedups/purgedups": {
+                        "branch": "master",
+                        "git_sha": "911696ea0b62df80e900ef244d7867d177971f73",
+                        "installed_by": ["modules"]
+                    },
+                    "pycoqc": {
+                        "branch": "master",
+                        "git_sha": "911696ea0b62df80e900ef244d7867d177971f73",
+                        "installed_by": ["modules"]
+                    },
+                    "quast": {
+                        "branch": "master",
+                        "git_sha": "911696ea0b62df80e900ef244d7867d177971f73",
+                        "installed_by": ["modules"]
+                    },
+                    "samblaster": {
+                        "branch": "master",
+                        "git_sha": "603ecbd9f45300c9788f197d2a15a005685b4220",
+                        "installed_by": ["modules"]
+                    },
+                    "samtools/index": {
+                        "branch": "master",
+                        "git_sha": "911696ea0b62df80e900ef244d7867d177971f73",
+                        "installed_by": ["modules"]
+                    },
+                    "seqkit/grep": {
+                        "branch": "master",
+                        "git_sha": "fd08c25c759d5d1f30422e73c9be153dbf657724",
+                        "installed_by": ["modules"]
+                    },
+                    "seqtk/seq": {
+                        "branch": "master",
+                        "git_sha": "911696ea0b62df80e900ef244d7867d177971f73",
+                        "installed_by": ["modules"]
+                    }
+                }
+            }
+        }
+    }
+}

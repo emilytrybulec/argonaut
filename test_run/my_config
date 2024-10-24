@@ -1,0 +1,205 @@
+params {
+
+    //// INPUT OPTIONS ////
+
+    tar                        = false
+    // fastq or fastq.gz file in .tar format
+
+    longread                   = true
+    // ONT and or PacBio Hifi reads available
+
+    ONT_lr                     = true
+    // ONT reads available
+
+    ONT_lr_ultralong           = false
+    // ONT reads being provided are ultra long
+
+    PacBioHifi_lr              = true
+    // PacBio reads are available
+
+    shortread                  = true
+    // Illumina short reads are available
+
+    summary_txt_file           = false
+    // Summary text file from ONT sequencer is available
+
+    kmer_num                   = 21
+    // Preferred kmer number for meryl and other similar programs
+
+
+    // LONG READ QC
+
+    min_readlength             = 0
+    // Length filter for ONT long reads
+
+    save_unaligned             = true
+    save_aligned               = false
+    sam_format                 = false
+    // Options for centrifuge, recommended to leave as is
+
+    //// SHORT READ QC ////
+
+    length_cutoff              = 45
+    // Length filtering for Illumina short reads
+
+    adapter_fasta              = []
+    // Adapter fasta sequence if available
+
+    dedup                      = false
+    // Deduplication of short reads with FastP
+
+    quality_trimming           = false
+    // Quality trimming short reads with FastP
+
+    save_trimmed_fail          = false
+    save_merged                = false
+    save_output_fastqs         = true
+    save_reads_assignment      = true
+    // Options for FastP, recommended to leave as is
+
+
+    //// ASSEMBLY OPTIONS ////
+
+    flye                       = true
+    // Run flye assembler with long reads, if available
+
+    canu                       = false
+    // Run canu assembler with long reads, if available
+
+    hifiasm                    = true
+    // Run hifiasm assembler with HiFi and ONT ultra long reads, if available
+
+    masurca                    = true
+    // Run masurca assembler with long and short reads, if available
+    
+    masurca_sr_adv             = false
+    // Run masurca assembler using a manually curated configuration file
+
+    redundans                  = false
+    // Run redundans assembler with short reads, if available
+
+    ex_assembly                = false
+    // Input existing assembly into the pipeline for downstream processing
+
+    //// ASSEMBLY QC OPTIONS ////
+
+    tolerable_collision        = 0.001
+    // Tolerable collision rate for Merqury
+
+    bam_format                 = true
+    cigar_paf_format           = true
+    cigar_bam                  = false
+    // Options for Minimap2, recommended to leave as is
+
+
+    //// POLISH OPTIONS ////
+
+    medaka_polish              = false
+    // Run medaka polishing on assemblies
+
+    racon_polish               = true
+    // Run racon polishing on assemblies and or medaka polish
+
+
+    //// PURGE OPTIONS ////
+
+    purge                      = true
+    // Run purge haplotigs on assemblies
+
+    //// to be inputted by the user after histogram is generated ////
+
+    low = null
+    // -l flag for purge haplotigs
+
+    mid = null
+    // -m flag for purge haplotigs
+    
+    high = null
+    // -h flag for purge haplotigs
+    
+
+    //// SCAFFOLDING OPTIONS /////
+
+    ragtag_scaffold            = true
+    // Run ragtag to scaffold assembly to closely related species' reference genome
+
+
+    //// VISUALIZATION OPTIONS ////
+    blobtools_visualization    = false
+    // Run blobtools on final assemblies
+
+
+    //// PARAMETERS ////
+    // to be set in your params.yaml file
+
+    // Required params (vary depending on read input)
+
+    input                      = null    
+    // Path to ONT samplesheet, or PacBio samplesheet if no ONT reads
+
+    shortinput                 = null
+    // Path to Illumina samplesheet
+
+    pb_input                   = null  
+    // Path to PacBio samplesheet
+
+    fastq                      = null    
+    // Path to ONT fastq, PacBio fastq, or Illumina fastq 
+    // Mainly used for workflow initiation, reads are taken from samplesheets
+
+    summary_txt                = null
+    // Path to summary text file from ONT sequencing_summary
+
+    model                      = null    
+    // Model of ONT sequencer for medaka 
+
+    busco_lineage              = null
+    // Specify taxonomic lineage protein dataset for BUSCO completeness quality checking
+    
+    centrifuge_db              = null 
+    // Path to centrifuge database for ONT contaminant filtering 
+
+    kraken_db                  = null   
+    // Path to kraken2 database for Illumina or PacBio contaminant filtering
+    
+    rcf_db                     = null
+    // Path to recentrifuge database for contaminant visualization
+
+    outdir                     = null
+    // Specify an outdirectory name
+ 
+
+    // Optional params depending on configs set above
+
+    manual_genome_size         = null
+    // Specify a genome size rather than using output from Genomescope2 or Kmerfreq
+
+    pb_xml                     = null
+    // SubreadSet or ConsensusReadSet dataset XML (optionally) inputted for PacBio quality checking
+    
+    existing_assembly          = null
+    // Path to an existing assembly
+
+    flye_mode                  = null
+    // Specify flye mode based on data type 
+
+    canu_mode                  = null
+    // Specify canu mode based on data type
+
+    masurca_config             = null
+    // Path to masurca config file for advanced runs
+
+    ragtag_reference           = null
+    // Path to reference genome for scaffolding
+
+    taxon_taxid                = null
+    // Species taxid from Genomes on a Tree (GOAT) for blobtools, not required to run
+
+    taxon_taxdump              = null
+    // Path to taxdump for blobtools, not required to run
+
+    blast_db                   = null
+    // Path to blast database for blobtools contaminant detection, not required to run
+
+}
+

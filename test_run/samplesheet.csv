@@ -1,0 +1,4 @@
+sample,fastq_1,fastq_2,single_end,read_type
+chr3_gibbon_pb,/core/projects/EBP/conservation/gen_assembly_pipeline/hoolock_chrm_3/chr3_pb.fastq.gz,,TRUE,pb
+chr3_gibbon_ont,/core/projects/EBP/conservation/gen_assembly_pipeline/hoolock_chrm_3/chr3_ont.fastq.gz,,TRUE,ont
+chr3_gibbon_ill,/core/projects/EBP/conservation/gen_assembly_pipeline/hoolock_chrm_3/chr3_ill_R1.paired.fastq.gz,/core/projects/EBP/conservation/gen_assembly_pipeline/hoolock_chrm_3/chr3_ill_R2.paired.fastq.gz,FALSE,ill

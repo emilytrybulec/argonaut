@@ -1,0 +1,616 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "https://raw.githubusercontent.com/nf-core/genomeassembly/master/nextflow_schema.json",
+    "title": "nf-core/genomeassembly pipeline parameters",
+    "description": "pipeline for ONT long read genome assembly",
+    "type": "object",
+    "definitions": {
+        "input_options": {
+            "title": "Input options",
+            "type": "object",
+            "description": "Define what kind of input data the pipeline should expect and where to find it.",
+            "default": "",
+            "properties": {
+                "tar": {
+                    "type": "boolean",
+                    "description": "Boolean whether long reads are in a tar archive for storage purposes"
+                },
+                "longread": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Boolean whether long reads are available for assembly"
+                },
+                "ONT_lr": {
+                    "type": "boolean",
+                    "description": "Boolean whether long reads are Oxford Nanopore"
+                },
+                "ONT_lr_ultralong": {
+                    "type": "boolean",
+                    "description": "Boolean whether long reads are ultra long Oxford Nanopore (will be used for Hifiasm if PacBio is available)"
+                },
+                "summary_txt_file": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Boolean whether a sequencing summary text file is available"
+                },
+                "PacBioHifi_lr": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Boolean whether long reads are PacBio Hifi"
+                },
+                "shortread": {
+                    "type": "boolean",
+                    "description": "Boolean whether short reads are available for assembly"
+                },
+                "kmer_num": {
+                    "type": "integer",
+                    "default": 21,
+                    "description": "Kmer size for genome size estimation (ex. 21)"
+                }
+            }
+        },
+        "long_read_qc_options": {
+            "title": "Long read QC options",
+            "type": "object",
+            "default": "",
+            "properties": {
+                "centrifuge_ont": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Boolean to decontaminate ONT reads with Centrifuge"
+                },
+                "kraken_pb": {
+                    "type": "boolean",
+                    "description": "Boolean to decontaminate HiFi reads with Kraken2",
+                    "default": true
+                },
+                "min_readlength": {
+                    "type": "integer",
+                    "default": 0,
+                    "description": "Option to set minimum read length for quality cutoff"
+                },
+                "save_unaligned": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Centrifuge option to save the unaligned sequences"
+                },
+                "save_aligned": {
+                    "type": "boolean",
+                    "description": "Centrifuge option to save the aligned sequences (contaminants)"
+                },
+                "sam_format": {
+                    "type": "boolean",
+                    "description": "Centrifuge option to save in sam format"
+                }
+            }
+        },
+        "short_read_qc_options": {
+            "title": "Short read QC options",
+            "type": "object",
+            "default": "",
+            "properties": {
+                "kraken_ill": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Boolean to decontaminate short reads with Kraken2"
+                },
+                "length_cutoff": {
+                    "type": "integer",
+                    "default": 45,
+                    "description": "Fastp option to filter reads shorter than a certain length"
+                },
+                "adapter_fasta": {
+                    "type": "string",
+                    "default": "[]",
+                    "description": "Fastp option to provide a file with the adapter sequence (optional)"
+                },
+                "dedup": {
+                    "type": "boolean",
+                    "description": "Fastp option to deduplicate short reads"
+                },
+                "quality_trimming": {
+                    "type": "boolean",
+                    "description": "Fastp option to trim the ends of reads with low quality scores"
+                },
+                "save_trimmed_fail": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Fastp option to save trimmed files that failed to pass trimming thresholds as *.fail.fastq.gz"
+                },
+                "save_merged": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Fastp option to save all merged reads to *.merged.fastq.gz"
+                },
+                "save_output_fastqs": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Kraken2 option to save classified and unclassified *.fastq files"
+                },
+                "save_reads_assignment": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Kraken2 option to save a file containing taxonomic classification of each input read"
+                }
+            }
+        },
+        "assembly_options": {
+            "title": "Assembly options",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "properties": {
+                "flye": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Option to run flye assembly (requires long reads)"
+                },
+                "canu": {
+                    "type": "boolean",
+                    "description": "Option to run canu assembly (requires high quality long reads with sufficient coverage)"
+                },
+                "hifiasm": {
+                    "type": "boolean",
+                    "description": "Option to run hifiasm assembly (recommended to be used with Pacbio HiFi long reads)"
+                },
+                "masurca": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Option to run MaSuRCA assembly (requires long and short reads)"
+                },
+                "masurca_sr_adv": {
+                    "type": "boolean",
+                    "description": "Option to run MaSuRCA assembly using your own config file instead of using the command line generated file"
+                },
+                "ex_assembly": {
+                    "type": "boolean",
+                    "description": "Option to input existing assembly in *.fasta format"
+                },
+                "redundans": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Option to run redundans assembly (requires short reads)"
+                }
+            }
+        },
+        "assembly_qc_options": {
+            "title": "Assembly QC options",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "properties": {
+                "bam_format": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Minimap2 option to save alignment as *.bam file"
+                },
+                "cigar_paf_format": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Minimap2 option that output CIGAR should be in PAF format"
+                },
+                "cigar_bam": {
+                    "type": "boolean",
+                    "description": "Minimap2 option that output CIGAR should be in BAM format"
+                },
+                "tolerable_collision": {
+                    "type": "number",
+                    "default": 0.001,
+                    "description": "Tolerable collision rate for sequencing (ex. 0.001)"
+                }
+            }
+        },
+        "polish_options": {
+            "title": "Polish options",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "properties": {
+                "medaka_polish": {
+                    "type": "boolean",
+                    "description": "Boolean to polish assemblies with medaka"
+                },
+                "racon_polish": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Boolean to polish assemblies with racon"
+                }
+            }
+        },
+        "purge_options": {
+            "title": "Purge options",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "properties": {
+                "purge": {
+                    "type": "boolean",
+                    "description": "Boolean to run purge histogram on assemblies"
+                },
+                "low": {
+                    "type": "integer",
+                    "description": "Low threshold of purge histogram, must be inputted after histogram is generated to reduce erroneous duplication with purge"
+                },
+                "mid": {
+                    "type": "integer",
+                    "description": "Mid threshold of purge histogram, must be inputted after histogram is generated to reduce erroneous duplication with purge"
+                },
+                "high": {
+                    "type": "integer",
+                    "description": "High threshold of purge histogram, must be inputted after histogram is generated to reduce erroneous duplication with purge"
+                }
+            }
+        },
+        "scaffolding_options": {
+            "title": "Scaffolding options",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "properties": {
+                "ragtag_scaffold": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Option to run scaffolding on polished and purged assemblies"
+                }
+            }
+        },
+        "visualization_options": {
+            "title": "Visualization options",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "properties": {
+                "blobtools_visualization": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Boolean to visualize assemblies with blobtools"
+                }
+            }
+        },
+        "required_params": {
+            "title": "Required params",
+            "type": "object",
+            "description": "Paths to be specified in params.yaml, which vary depending on long vs short reads",
+            "default": "",
+            "properties": {
+                "input": {
+                    "type": "string",
+                    "description": "Path to comma-separated file containing information about the ONT long reads (or PacBio if no ONT available)"
+                },
+                "pb_input": {
+                    "type": "string",
+                    "description": "Path to comma-separated file containing information about the PacBio long reads"
+                },
+                "shortinput": {
+                    "type": "string",
+                    "description": "Path to comma-separated file containing information about the short reads"
+                },
+                "fastq": {
+                    "type": "string",
+                    "description": "Path to your long read fastq file (*.fastq, *.fastq.gz, *.fastq.tar.gz)"
+                },
+                "centrifuge_db": {
+                    "type": "string",
+                    "description": "Path to centrifuge database containing contaminant sequences"
+                },
+                "kraken_db": {
+                    "type": "string",
+                    "default": "None",
+                    "description": "Path to Kraken2 database containing contaminant sequences"
+                },
+                "rcf_db": {
+                    "type": "string",
+                    "description": "Path to Recentrifuge database containing contaminant information"
+                },
+                "busco_lineage": {
+                    "type": "string",
+                    "default": "None",
+                    "description": "Lineage for BUSCO (ex. \"metazoa-odb10\")"
+                },
+                "outdir": {
+                    "type": "string",
+                    "format": "directory-path",
+                    "description": "The output directory where the results will be saved. You have to use absolute paths to storage on Cloud infrastructure.",
+                    "fa_icon": "fas fa-folder-open"
+                }
+            },
+            "required": [
+                "outdir"
+            ]
+        },
+        "optional_params": {
+            "title": "Optional params",
+            "type": "object",
+            "description": "Paths provided in params.yaml depending on configs set above",
+            "default": "",
+            "properties": {
+                "summary_txt": {
+                    "type": "string",
+                    "description": "Path to sequencing summary from Nanopore (*.txt)"
+                },
+                "manual_genome_size": {
+                    "type": "string",
+                    "description": "Optional genome size input that overrides estimated genome size generated by the pipeline (ex. 1.1G)"
+                },
+                "existing_assembly": {
+                    "type": "string",
+                    "description": "Path to existing assembly in *.fasta format"
+                },
+                "flye_mode": {
+                    "type": "string",
+                    "default": "\"--nano-raw\"",
+                    "description": "Mode of long read sequencing (ex. \"--nano-raw\")"
+                },
+                "canu_mode": {
+                    "type": "string",
+                    "default": "\"-nanopore\"",
+                    "description": "Mode of long read sequencing (ex. \"-nanopore\")"
+                },
+                "masurca_config": {
+                    "type": "string",
+                    "description": "Path to masurca config file, to be inputted by users modifying specific configurations"
+                },
+                "model": {
+                    "type": "string",
+                    "description": "ONT flow cell model (ex. \"r1041_e82_400bps_sup_g615\")"
+                },
+                "ragtag_reference": {
+                    "type": "string",
+                    "description": "Path to reference genome for scaffolding (must be the same species or closely related)"
+                }
+            }
+        },
+        "institutional_config_options": {
+            "title": "Institutional config options",
+            "type": "object",
+            "fa_icon": "fas fa-university",
+            "description": "Parameters used to describe centralised config profiles. These should not be edited.",
+            "help_text": "The centralised nf-core configuration profiles use a handful of pipeline parameters to describe themselves. This information is then printed to the Nextflow log when you run a pipeline. You should not need to change these values when you run a pipeline.",
+            "properties": {
+                "custom_config_version": {
+                    "type": "string",
+                    "description": "Git commit id for Institutional configs.",
+                    "default": "master",
+                    "hidden": true,
+                    "fa_icon": "fas fa-users-cog"
+                },
+                "custom_config_base": {
+                    "type": "string",
+                    "description": "Base directory for Institutional configs.",
+                    "default": "https://raw.githubusercontent.com/nf-core/configs/master",
+                    "hidden": true,
+                    "help_text": "If you're running offline, Nextflow will not be able to fetch the institutional config files from the internet. If you don't need them, then this is not a problem. If you do need them, you should download the files from the repo and tell Nextflow where to find them with this parameter.",
+                    "fa_icon": "fas fa-users-cog"
+                },
+                "config_profile_name": {
+                    "type": "string",
+                    "description": "Institutional config name.",
+                    "hidden": true,
+                    "fa_icon": "fas fa-users-cog"
+                },
+                "config_profile_description": {
+                    "type": "string",
+                    "description": "Institutional config description.",
+                    "hidden": true,
+                    "fa_icon": "fas fa-users-cog"
+                },
+                "config_profile_contact": {
+                    "type": "string",
+                    "description": "Institutional config contact information.",
+                    "hidden": true,
+                    "fa_icon": "fas fa-users-cog"
+                },
+                "config_profile_url": {
+                    "type": "string",
+                    "description": "Institutional config URL link.",
+                    "hidden": true,
+                    "fa_icon": "fas fa-users-cog"
+                }
+            }
+        },
+        "max_job_request_options": {
+            "title": "Max job request options",
+            "type": "object",
+            "fa_icon": "fab fa-acquisitions-incorporated",
+            "description": "Set the top limit for requested resources for any single job.",
+            "help_text": "If you are running on a smaller system, a pipeline step requesting more resources than are available may cause the Nextflow to stop the run with an error. These options allow you to cap the maximum resources requested by any single job so that the pipeline will run on your system.\n\nNote that you can not _increase_ the resources requested by any job using these options. For that you will need your own configuration file. See [the nf-core website](https://nf-co.re/usage/configuration) for details.",
+            "properties": {
+                "max_cpus": {
+                    "type": "integer",
+                    "description": "Maximum number of CPUs that can be requested for any single job.",
+                    "default": 16,
+                    "fa_icon": "fas fa-microchip",
+                    "hidden": true,
+                    "help_text": "Use to set an upper-limit for the CPU requirement for each process. Should be an integer e.g. `--max_cpus 1`"
+                },
+                "max_memory": {
+                    "type": "string",
+                    "description": "Maximum amount of memory that can be requested for any single job.",
+                    "default": "128.GB",
+                    "fa_icon": "fas fa-memory",
+                    "pattern": "^\\d+(\\.\\d+)?\\.?\\s*(K|M|G|T)?B$",
+                    "hidden": true,
+                    "help_text": "Use to set an upper-limit for the memory requirement for each process. Should be a string in the format integer-unit e.g. `--max_memory '8.GB'`"
+                },
+                "max_time": {
+                    "type": "string",
+                    "description": "Maximum amount of time that can be requested for any single job.",
+                    "default": "240.h",
+                    "fa_icon": "far fa-clock",
+                    "pattern": "^(\\d+\\.?\\s*(s|m|h|day)\\s*)+$",
+                    "hidden": true,
+                    "help_text": "Use to set an upper-limit for the time requirement for each process. Should be a string in the format integer-unit e.g. `--max_time '2.h'`"
+                }
+            }
+        },
+        "generic_options": {
+            "title": "Generic options",
+            "type": "object",
+            "fa_icon": "fas fa-file-import",
+            "description": "Less common options for the pipeline, typically set in a config file.",
+            "help_text": "These options are common to all nf-core pipelines and allow you to customise some of the core preferences for how the pipeline runs.\n\nTypically these options would be set in a Nextflow config file loaded for all pipeline runs, such as `~/.nextflow/config`.",
+            "properties": {
+                "help": {
+                    "type": "boolean",
+                    "description": "Display help text.",
+                    "fa_icon": "fas fa-question-circle",
+                    "hidden": true
+                },
+                "version": {
+                    "type": "boolean",
+                    "description": "Display version and exit.",
+                    "fa_icon": "fas fa-question-circle",
+                    "hidden": true
+                },
+                "publish_dir_mode": {
+                    "type": "string",
+                    "default": "copy",
+                    "description": "Method used to save pipeline results to output directory.",
+                    "help_text": "The Nextflow `publishDir` option specifies which intermediate files should be saved to the output directory. This option tells the pipeline what method should be used to move these files. See [Nextflow docs](https://www.nextflow.io/docs/latest/process.html#publishdir) for details.",
+                    "fa_icon": "fas fa-copy",
+                    "enum": [
+                        "symlink",
+                        "rellink",
+                        "link",
+                        "copy",
+                        "copyNoFollow",
+                        "move"
+                    ],
+                    "hidden": true
+                },
+                "email": {
+                    "type": "string",
+                    "description": "Email address for MultiQC summary from pipeline template.",
+                    "fa_icon": "fas fa-envelope",
+                    "help_text": "Set this parameter to your e-mail address to get a summary e-mail with details of the run sent to you when the workflow exits. If set in your user config file (`~/.nextflow/config`) then you don't need to specify this on the command line for every run.",
+                    "pattern": "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$",
+                    "hidden": true
+                },
+                "email_on_fail": {
+                    "type": "string",
+                    "description": "Email address for completion summary, only when pipeline fails.",
+                    "fa_icon": "fas fa-exclamation-triangle",
+                    "pattern": "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$",
+                    "help_text": "An email address to send a summary email to when the pipeline is completed - ONLY sent if the pipeline does not exit successfully.",
+                    "hidden": true
+                },
+                "plaintext_email": {
+                    "type": "boolean",
+                    "description": "Send plain-text email instead of HTML.",
+                    "fa_icon": "fas fa-remove-format",
+                    "hidden": true
+                },
+                "max_multiqc_email_size": {
+                    "type": "string",
+                    "description": "File size limit when attaching MultiQC reports to summary emails.",
+                    "pattern": "^\\d+(\\.\\d+)?\\.?\\s*(K|M|G|T)?B$",
+                    "default": "25.MB",
+                    "fa_icon": "fas fa-file-upload",
+                    "hidden": true
+                },
+                "monochrome_logs": {
+                    "type": "boolean",
+                    "description": "Do not use coloured log outputs.",
+                    "fa_icon": "fas fa-palette",
+                    "hidden": true
+                },
+                "hook_url": {
+                    "type": "string",
+                    "description": "Incoming hook URL for messaging service",
+                    "fa_icon": "fas fa-people-group",
+                    "help_text": "Incoming hook URL for messaging service. Currently, MS Teams and Slack are supported.",
+                    "hidden": true
+                },
+                "multiqc_title": {
+                    "type": "string",
+                    "description": "MultiQC report title. Printed as page header, used for filename if not otherwise specified.",
+                    "fa_icon": "fas fa-file-signature",
+                    "hidden": true
+                },
+                "multiqc_config": {
+                    "type": "string",
+                    "description": "Custom config file to supply to MultiQC.",
+                    "fa_icon": "fas fa-cog",
+                    "hidden": true
+                },
+                "multiqc_logo": {
+                    "type": "string",
+                    "description": "Custom logo file to supply to MultiQC. File name must also be set in the MultiQC config file",
+                    "fa_icon": "fas fa-image",
+                    "hidden": true
+                },
+                "multiqc_methods_description": {
+                    "type": "string",
+                    "description": "Custom MultiQC yaml file containing HTML including a methods description.",
+                    "fa_icon": "fas fa-cog",
+                    "hidden": true
+                },
+                "tracedir": {
+                    "type": "string",
+                    "description": "Directory to keep pipeline Nextflow logs and reports.",
+                    "default": "${params.outdir}/pipeline_info",
+                    "fa_icon": "fas fa-cogs",
+                    "hidden": true
+                },
+                "validate_params": {
+                    "type": "boolean",
+                    "description": "Boolean whether to validate parameters against the schema at runtime",
+                    "default": true,
+                    "fa_icon": "fas fa-check-square",
+                    "hidden": true
+                },
+                "show_hidden_params": {
+                    "type": "boolean",
+                    "fa_icon": "far fa-eye-slash",
+                    "description": "Show all params when using `--help`",
+                    "help_text": "By default, parameters set as _hidden_ in the schema are not shown on the command line when a user runs with `--help`. Specifying this option will tell the pipeline to show all parameters.",
+                    "hidden": true
+                }
+            }
+        }
+    },
+    "allOf": [
+        {
+            "$ref": "#/definitions/input_options"
+        },
+        {
+            "$ref": "#/definitions/long_read_qc_options"
+        },
+        {
+            "$ref": "#/definitions/short_read_qc_options"
+        },
+        {
+            "$ref": "#/definitions/assembly_options"
+        },
+        {
+            "$ref": "#/definitions/assembly_qc_options"
+        },
+        {
+            "$ref": "#/definitions/polish_options"
+        },
+        {
+            "$ref": "#/definitions/purge_options"
+        },
+        {
+            "$ref": "#/definitions/scaffolding_options"
+        },
+        {
+            "$ref": "#/definitions/visualization_options"
+        },
+        {
+            "$ref": "#/definitions/required_params"
+        },
+        {
+            "$ref": "#/definitions/optional_params"
+        },
+        {
+            "$ref": "#/definitions/institutional_config_options"
+        },
+        {
+            "$ref": "#/definitions/max_job_request_options"
+        },
+        {
+            "$ref": "#/definitions/generic_options"
+        }
+    ]
+}
