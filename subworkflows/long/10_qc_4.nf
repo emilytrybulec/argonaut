@@ -25,6 +25,7 @@ workflow QC_4 {
         ch_meryl
         no_meta_fq
         meryl_repk
+        merqury_comp
 
     main:
 
@@ -122,6 +123,10 @@ workflow QC_4 {
             .concat(MERQURY.out.assembly_qv)
             .concat(MERQURY.out.stats)
             .set { ch_merqury }
+
+        merqury_comp
+            .concat(MERQURY.out.stats)
+            .set{ch_merqury_comp}
         ch_versions = ch_versions.mix(MERQURY.out.versions)
 
     emit:
@@ -131,6 +136,7 @@ workflow QC_4 {
         ch_merqury
         ch_bam
         ch_busco_full_table
+        ch_merqury_comp
 
         
     versions = ch_versions                     // channel: [ versions.yml ]
