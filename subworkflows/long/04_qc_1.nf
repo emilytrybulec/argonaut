@@ -151,8 +151,10 @@ workflow QC_1 {
         )
         
         MERQURY.out.assembly_qv
-            .concat(MERQURY.out.stats)
             .set{ch_merqury}
+
+        MERQURY.out.stats
+            .set{ch_merqury_comp}
 
     emit:
         ch_index = SAMTOOLS_INDEX.out.bai
@@ -167,6 +169,7 @@ workflow QC_1 {
         ch_busco_full_table
         racon
         MERYL_COUNT.out.repetitive_k
+        ch_merqury_comp
 
         
     versions = ch_versions                     // channel: [ versions.yml ]
