@@ -33,7 +33,7 @@ missing_buscos=\$(grep "Missing BUSCOs" "$input_file" | awk '{print \$1}')
 total_buscos=\$(grep "Total BUSCO groups searched" "$input_file" | awk '{print \$1}')
 
 merqury_score=\$(sed -n '46p' "$input_file" | awk '{print \$1}')
-merqury_comp=\$(sed -n '47p' "$input_file" | awk '{print \$1}')
+merqury_comp=\$(sed -n '49p' "$input_file" | awk '{print \$1}')
 
 
 # Output the formatted results
@@ -71,7 +71,7 @@ M_count=\$(grep "^M:" "$input_file" | awk '{print \$2}')
 N_count=\$(grep "^N:" "$input_file" | awk '{print \$2}')
 
 merqury_score=\$(sed -n '36p' "$input_file" | awk '{print \$1}')
-merqury_comp=\$(sed -n '37p' "$input_file" | awk '{print \$1}')
+merqury_comp=\$(sed -n '39p' "$input_file" | awk '{print \$1}')
 
 # Output the formatted results
 echo -e "Assembly\t\$assembly\nNumber of contigs\t\$contigs\nLargest contig\t\$largest_contig\nTotal length\t\$total_length\nGC (%)\t\$gc_percent\nN50\t\$n50\nN90\t\$n90\nauN\t\$aun\nL50\t\$l50\nL90\t\$l90\n# N's per 100 kbp\t\$ns_per_100kbp\n\nCompleasm\tS:\$S,D:\$D,F:\$F,M:\$M,n:\$N\nComplete and single-copy BUSCOs (S):\t\$S_count (\$S)\nComplete and duplicated BUSCOs (D):\t\$D_count (\$D)\nFragmented BUSCOs (F):\t\$F_count (\$F)\nMissing BUSCOs (M):\t\$M_count (\$M)\nTotal BUSCO groups searched (N):\t\$N\n\nMerqury quality value\t\$merqury_score\nMerqury completeness value\t\$merqury_comp" >> ${prefix}_qc.tsv
