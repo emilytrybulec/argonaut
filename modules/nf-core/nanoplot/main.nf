@@ -24,13 +24,13 @@ process NANOPLOT {
     def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
     def input_file = ("$ontfile".endsWith(".fastq")||"$ontfile".endsWith(".fastq.gz")||"$ontfile".endsWith(".fq.gz")||"$ontfile".endsWith(".fq")) ? "--fastq ${ontfile}" :
-        ("$ontfile".endsWith(".txt")) ? "--summary ${ontfile}" : ''
+        ("$ontfile".endsWith(".txt")) ? "--summary ${ontfile}" :  ("$ontfile".endsWith(".fasta")) ? "--fasta ${ontfile}" : ''
     """
     NanoPlot \\
         $args \\
         -p $prefix \\
         -t $task.cpus \\
-        --fastq ${ontfile}
+        $input_file
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
