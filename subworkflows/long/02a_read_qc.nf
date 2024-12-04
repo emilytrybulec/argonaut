@@ -22,14 +22,11 @@ workflow READ_QC {
             TAR(reads)
             reads = TAR.out.untar }
 
-        if ( params.ONT_lr_herrocorrected == false ) {
-            NANOPLOT(reads)
-            nanoplot_reads_out   = NANOPLOT.out.html
-            nanoplot_report_txt  = NANOPLOT.out.txt
-        } else {
-            nanoplot_reads_out = Channel.empty()
-            nanoplot_report_txt = Channel.empty()
-        }
+        
+        NANOPLOT(reads)
+        nanoplot_reads_out   = NANOPLOT.out.html
+        nanoplot_report_txt  = NANOPLOT.out.txt
+
         
 
         if ( params.centrifuge_db == null ){
