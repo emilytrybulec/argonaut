@@ -2,10 +2,10 @@ process HIFIASM {
     tag "$meta.id"
     label 'process_high'
 
-    conda "bioconda::hifiasm=0.18.5"
+    conda "bioconda::hifiasm=0.21.0"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/hifiasm:0.19.8--h43eeafb_0' :
-        'biocontainers/hifiasm:0.19.8--h43eeafb_0' }"
+        'https://depot.galaxyproject.org/singularity/hifiasm:0.21.0--h43eeafb_0' :
+        'biocontainers/hifiasm:0.21.0--h43eeafb_0' }"
 
     input:
     tuple val(meta), path(hifi_reads)
@@ -29,6 +29,8 @@ process HIFIASM {
     script:
     def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
+    def ont_name = "${ont}"
+    def ont_mode = ont_name.contains("ul") ? "--ul ${ontfile}" : "--ont ${ontfile}"
     if(ont){
        """
         hifiasm \\
@@ -36,7 +38,7 @@ process HIFIASM {
             -o ${prefix}.asm \\
             --primary \\
             -t $task.cpus \\
-            --ul $ont \\
+            ${ont_mode} \\
             $hifi_reads
 
         awk '/^S/{print ">"\$2;print \$3}' *.p_ctg.gfa > hifiasm_${prefix}.asm.p_ctg.fasta
