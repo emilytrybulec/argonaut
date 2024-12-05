@@ -127,7 +127,7 @@ workflow ASSEMBLY {
         }
 
         if (params.hifiasm ==true){
-            if (params.ONT_lr_ultralong == true && params.PacBioHifi_lr == true){
+            if (params.ONT_lr == true && params.PacBioHifi_lr == true){
                 HIFIASM(pacbio_reads, ont_reads)
                 println "assembling long reads with hifiasm!"
                 hifi_assembly    = HIFIASM.out.assembly_fasta
@@ -135,6 +135,8 @@ workflow ASSEMBLY {
                 hifi_assembly
                     .map { file -> tuple(id: file.simpleName, file)  }
                     .set { h_assembly }
+            } else if (params.ONT_lr == true && params.PacBioHifi_lr == false){
+                HIFIASM(ont_reads_w_meta, ont_reads)
             } else { 
                 HIFIASM(pacbio_reads, [])
                 println "assembling long reads with hifiasm!"
