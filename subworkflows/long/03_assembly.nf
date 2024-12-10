@@ -140,12 +140,13 @@ workflow ASSEMBLY {
             } else { 
                 HIFIASM(pacbio_reads, [])
                 println "assembling long reads with hifiasm!"
-                hifi_assembly    = HIFIASM.out.assembly_fasta
+                           
+            } hifi_assembly    = HIFIASM.out.assembly_fasta
 
                 hifi_assembly
                     .map { file -> tuple(id: file.simpleName, file)  }
-                    .set { h_assembly }           
-        }} else {
+                    .set { h_assembly }
+        } else {
             h_assembly = Channel.empty() 
             hifi_assembly = Channel.empty() 
         }
