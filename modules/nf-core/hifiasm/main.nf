@@ -30,7 +30,7 @@ process HIFIASM {
     def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
     def ont_name = "${ont}"
-    def ont_mode = ont_name.contains("ul") ? "--ul ${ontfile}" : "--ont ${ontfile}"
+    def ont_mode = ont_name.contains("ul") ? "--ul ${ont}" : "--ont ${ont}"
     if(ont){
        """
         hifiasm \\
