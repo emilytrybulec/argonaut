@@ -131,22 +131,23 @@ workflow ASSEMBLY {
                 HIFIASM(pacbio_reads, ont_reads)
                 println "assembling long reads with hifiasm!"
                 hifi_assembly    = HIFIASM.out.assembly_fasta
-
                 hifi_assembly
                     .map { file -> tuple(id: file.simpleName, file)  }
                     .set { h_assembly }
             } else if (params.ONT_lr == true && params.PacBioHifi_lr == false){
                 HIFIASM(ont_reads_w_meta, ont_reads)
-            } else { 
-                HIFIASM(pacbio_reads, [])
-                println "assembling long reads with hifiasm!"
-                           
-            } hifi_assembly    = HIFIASM.out.assembly_fasta
-
+                hifi_assembly    = HIFIASM.out.assembly_fasta
                 hifi_assembly
                     .map { file -> tuple(id: file.simpleName, file)  }
                     .set { h_assembly }
-        } else {
+            } else { 
+                HIFIASM(pacbio_reads, [])
+                println "assembling long reads with hifiasm!"
+                hifi_assembly    = HIFIASM.out.assembly_fasta
+                hifi_assembly
+                    .map { file -> tuple(id: file.simpleName, file)  }
+                    .set { h_assembly }
+            } } else {
             h_assembly = Channel.empty() 
             hifi_assembly = Channel.empty() 
         }
