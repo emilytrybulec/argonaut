@@ -135,7 +135,7 @@ workflow ASSEMBLY {
                     .map { file -> tuple(id: file.simpleName, file)  }
                     .set { h_assembly }
             } else if (params.ONT_lr == true && params.PacBioHifi_lr == false){
-                HIFIASM(ont_reads_w_meta, ont_reads)
+                HIFIASM(TOTAL_BASES_LR.out.total_bases, ont_reads)
                 hifi_assembly    = HIFIASM.out.assembly_fasta
                 hifi_assembly
                     .map { file -> tuple(id: file.simpleName, file)  }
