@@ -41,7 +41,7 @@ process HIFIASM {
             --primary \\
             -t $task.cpus \\
             ${ont_mode} \\
-            $hifi_reads
+            ${hifi_mode}
 
         awk '/^S/{print ">"\$2;print \$3}' *.p_ctg.gfa > hifiasm_${prefix}.asm.p_ctg.fasta
 
