@@ -20,6 +20,7 @@ workflow ASSEMBLY {
         ont_reads
         pacbio_reads
         ont_reads_w_meta
+        dummy_channel
 
     main:
     ch_versions = Channel.empty() 
@@ -135,7 +136,7 @@ workflow ASSEMBLY {
                     .map { file -> tuple(id: file.simpleName, file)  }
                     .set { h_assembly }
             } else if (params.ONT_lr == true && params.PacBioHifi_lr == false){
-                HIFIASM(TOTAL_BASES_LR.out.total_bases, ont_reads)
+                HIFIASM(dummy_channel, ont_reads)
                 hifi_assembly    = HIFIASM.out.assembly_fasta
                 hifi_assembly
                     .map { file -> tuple(id: file.simpleName, file)  }
