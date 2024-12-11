@@ -235,14 +235,17 @@ workflow GENOMEASSEMBLY {
             .combine(full_size)
             .set{ch_ont_cov}
         COVERAGE_LR (ch_ont_cov)
+        ch_dummy = TOTAL_BASES_LR.out.total_bases
     }   
     if (params.longread == true && params.PacBioHifi_lr == true){
         COVERAGE_LR_PB (full_size, READ_QC3.out[3])
+        ch_dummy = READ_QC3.out[3]
     }
     if (params.shortread == true) {
         TOTAL_BASES_SR (READ_QC2.out[2])
         COVERAGE_SR (full_size, TOTAL_BASES_SR.out.total_bases_before, TOTAL_BASES_SR.out.total_bases_after)
-    }
+        ch_dummy =   READ_QC2.out[2]  
+}
 
     if (params.ONT_lr == true && params.PacBioHifi_lr == true) {
         CAT(ch_combo_longreads)
@@ -255,12 +258,12 @@ workflow GENOMEASSEMBLY {
     //long read and hybrid assemblies
     if (params.longread == true && params.shortread == true){
         //assembly inputting long & short reads
-        ASSEMBLY (ch_longreads, READ_QC2.out[1], readable_size, full_size, combined_lr, no_meta_ch_ONT, ch_PacBiolongreads, ch_ONTlongreads)
+        ASSEMBLY (ch_longreads, READ_QC2.out[1], readable_size, full_size, combined_lr, no_meta_ch_ONT, ch_PacBiolongreads, ch_ONTlongreads, ch_dummy)
         lr_assemblies   = ASSEMBLY.out[4]
     } else if (params.longread == true && params.shortread == false) {
         ch_shortdata = Channel.empty() 
         //assembly of decontam and length filtered (if specified) long reads
-        ASSEMBLY (ch_longreads, [], readable_size, full_size, combined_lr, no_meta_ch_ONT, ch_PacBiolongreads, ch_ONTlongreads)
+        ASSEMBLY (ch_longreads, [], readable_size, full_size, combined_lr, no_meta_ch_ONT, ch_PacBiolongreads, ch_ONTlongreads, ch_dummy)
         lr_assemblies   = ASSEMBLY.out[4]
     ch_versions = ch_versions.mix(ASSEMBLY.out.versions)   
     } else {
