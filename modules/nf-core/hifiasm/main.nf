@@ -31,8 +31,8 @@ process HIFIASM {
     def prefix = task.ext.prefix ?: "${meta.id}"
     def ont_name = "${ont}"
     def hifi_name = "${hifi_reads}"
-    def hifi_mode = hifi_name.contains("pb") ? "${hifi_reads}" : ""
-    def ont_mode = ont_name.contains("ul") ? "--ul ${ont}" : "--ont ${ont}"
+    def hifi_mode = hifi_name.contains("pb") ? "${hifi_reads}" : "--ont ${ont}"
+    def ont_mode = ont_name.contains("ul") ? "--ul ${ont}" : ""
     if(ont){
        """
         hifiasm \\
