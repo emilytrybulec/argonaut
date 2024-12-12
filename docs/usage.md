@@ -24,8 +24,10 @@ maca_jans_ill,SRR11191912_1.fastq.gz,SRR11191912_2.fastq.gz,FALSE,ill
 maca_jans_pb,SRR11191909.fastq.gz,,TRUE,pb
 ```
 !!! PLEASE ADD "ont", "pb", AND/OR "ill" TO YOUR SAMPLES NAMES !!!   
-Flye and canu will automatically detect your read type based on your samplesheet sample names. Please ensure that read type (ont, pb, or ill) is also indicated in the last column.
-
+Flye and canu will automatically detect your read type based on your samplesheet sample names. Please ensure that read type (ont, pb, or ill) is also indicated in the last column.  
+  
+If you have ultra long ONT reads, please add "ul" to your names, as well and combine them with standard ONT reads, if available.
+  
 |   `sample`    | Custom sample name.  
 |   `fastq_1`   | Full path to FastQ file for ONT long reads or Illumina short reads 1. File must have the extension ".fastq" or ".fastq.qz".  
 |   `fastq_2`   | Full path to FastQ file for Illumina short reads 2. File must have the extension ".fastq" or ".fastq.gz".  
@@ -69,7 +71,9 @@ For detailed information about parameters, please refer to the [config](../nextf
 
 [Here](https://github.com/emilytrybulec/argonaut/blob/main/params.yaml) is a full params.yaml example for a test run.
 
-Not all parameters are required, and the default settings can be modified for individualized use. If you would like to change any settings dictating which assemblers run, whether short reads are available, or options like length filtering and scaffolding, please create a config file using the directions [below](#Configurations).
+Not all parameters are required, and the default settings can be modified for individualized use. If you would like to change any settings dictating which assemblers run, whether short reads are available, or options like length filtering and scaffolding, please create a config file using the directions [below](#Configurations).  
+
+Genome size estimation and decontamination for Herro corrected reads are currently not supported. A manual genome size estimate must be inputted for these reads if other reads are not available and decontamination should be performed before correction, if needed. Please provide a genome size in your params.yaml.   
 
 ### Inputting your own assembly  
 For users who would like to input an existing genome assembly into the pipeline for downstream processing, please add a line to your params file specifying the path to your *.fasta or *.fa file like so:
@@ -99,6 +103,7 @@ params{
   ragtag_scaffold     = false
 }
 ```
+Genome size estimation and decontamination for Herro corrected reads is currently not supported. A manual genome size estimate must be inputted for these reads if other reads are not available and decontamination should be performed before correction, if needed. Please switch centrifuge_ont to off in your config file.    
 
 ## Running the pipeline
 
