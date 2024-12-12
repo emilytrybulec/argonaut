@@ -5,7 +5,7 @@
 ## Introduction
 
 
-**Argonaut** performs **a**utomated **r**eads to **g**enome **o**perations for de **n**ovo **a**ssemblies; it is a bioinformatics pipeline that performs genome assembly on long and short read data. A fastq file and input information is fed to the pipeline, resulting in final assemblies with completeness, contiguity, and correctnesss quality checking at each step. The pipeline accepts short reads, long reads, or both. 
+**Argonaut** performs **a**utomated **r**eads to **g**enome **o**perations for de **n**ovo **a**ssemblies; it is a bioinformatics pipeline that performs genome assembly on long and short read data. A fastq file (or fasta for Herro corrected reads) and input information is fed to the pipeline, resulting in final assemblies with completeness, contiguity, and correctnesss quality checking at each step. The pipeline accepts short reads, long reads, or both. 
 
 <img align="right" height="300" src="https://github.com/emilytrybulec/argonaut/blob/main/assets/Argonaut_Manuscript_Figure.pdf">
 
@@ -84,11 +84,13 @@ To get started setting up your run, prepare a samplesheet with your input data a
 ```csv
 sample,fastq_1,fastq_2,single_end,read_type
 chr3_gibbon_pb,/core/projects/EBP/conservation/gen_assembly_pipeline/hoolock_chrm_3/chr3_pb.fastq.gz,,TRUE,pb
-chr3_gibbon_ont,/core/projects/EBP/conservation/gen_assembly_pipeline/hoolock_chrm_3/chr3_ont.fastq.gz,,TRUE,ont
+chr3_gibbon_ul_ont,/core/projects/EBP/conservation/gen_assembly_pipeline/hoolock_chrm_3/chr3_ul_ont.fastq.gz,,TRUE,ont
 chr3_gibbon_ill,/core/projects/EBP/conservation/gen_assembly_pipeline/hoolock_chrm_3/chr3_ill_R1.paired.fastq.gz,/core/projects/EBP/conservation/gen_assembly_pipeline/hoolock_chrm_3/chr3_ill_R2.paired.fastq.gz,FALSE,ill
 ```
 
-!!! PLEASE ADD "ont", "pb", AND/OR "ill" TO YOUR SAMPLE NAMES AND FILE NAMES!!! Failure to do so may result in assemblers not recognizing your read type and/or outputs being overwritten.
+!!! PLEASE ADD "ont", "pb", AND/OR "ill" TO YOUR SAMPLE NAMES AND FILE NAMES!!! Failure to do so may result in assemblers not recognizing your read type and/or outputs being overwritten.  
+
+If you have ultra long ONT reads, please add "ul" to your names, as well and combine them with standard ONT reads, if available. 
 
 The sample name inputted in your samplesheet will serve as the prefix for your output files. Please indicate which kind of read is being inputted in the sample name, as well as the read type column. 
 
@@ -155,6 +157,8 @@ All of the output from the programs run in the pipeline pipeline will be located
     └── execution_trace_*.txt
 ```
 Some output files have labels such as "dc", indicating that the reads have been decontaminated, or  "lf", indicating that reads have been length filtered.  
+
+Genome size estimation and decontamination for Herro corrected reads is currently not supported. A manual genome size estimate must be inputted for these reads if other reads are not available and decontamination should be performed before correction, if needed.  
   
 Information about interpreting output is located in the [output](docs/output.md) section.
 
