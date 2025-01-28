@@ -322,11 +322,14 @@ class NfcoreTemplate {
         String workflow_version = NfcoreTemplate.version(workflow)
         String.format(
             """\n
-            ${colors.blue} _______________________________________________________
-            ${colors.blue}   __    __    __    __          __       ___
-            ${colors.blue}  |__|  |__|  | _   |  |  |\\ |  |__| |  |  | 
-            ${colors.blue}  |  |  |  \\  |__|  |__|  | \\|  |  | |__|  |  
-            ${colors.blue} _______________________________________________________
+            ${colors.blue} _____________________________________________________
+            ${colors.blue}                                               __ 
+            ${colors.blue}     ____ __________ _____  ____  ____ ___  __/ /_
+            ${colors.blue}    / __ `/ ___/ __ `/ __ \/ __ \/ __ `/ / / / __/
+            ${colors.blue}   / /_/ / /  / /_/ / /_/ / / / / /_/ / /_/ / /_  
+            ${colors.blue}   \__,_/_/   \__, /\____/_/ /_/\__,_/\__,_/\__/  
+            ${colors.blue}             /____/ 
+            ${colors.blue} _____________________________________________________
             \n
             """.stripIndent()
         )
