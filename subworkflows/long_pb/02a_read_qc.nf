@@ -7,7 +7,6 @@ include { KRAKEN2_KRAKEN2_PB } from '../../modules/nf-core/kraken2/kraken2/main'
 include { RECENTRIFUGE_KR } from '../../modules/local/recentrifuge/kraken'
 include { NANOPLOT } from '../../modules/nf-core/nanoplot/main'
 include { TOTAL_BASES_LR } from '../../modules/local/total_bases_lr' 
-include { RUN_QC } from '../../modules/local/runqc'
 
 workflow READ_QC3 {
 
@@ -21,10 +20,6 @@ workflow READ_QC3 {
 
         NANOPLOT(input_pacbio)
         TOTAL_BASES_LR (NANOPLOT.out.txt)
-
-        if (params.pb_xml) {
-            RUN_QC(params.pb_xml)
-        }
 
 	    CUTADAPT (input_pacbio)
 	    ch_versions = ch_versions.mix(CUTADAPT.out.versions)
