@@ -1,5 +1,4 @@
 process RUN_QC {
-    tag "$meta.id"
     label 'process_low'
 
     container 'kathrin1414/runqc'
