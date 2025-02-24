@@ -1,6 +1,6 @@
 process MERYL_COUNT {
     tag "$meta.id"
-    label 'process_meryl'
+    label 'process_high'
 
     conda "bioconda::meryl=1.3"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
