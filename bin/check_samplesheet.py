@@ -32,6 +32,7 @@ class RowChecker:
         ".fa.gz",
         ".fasta.gz",
         ".fasta"
+        ".fa"
     )
 
     def __init__(
