@@ -31,7 +31,7 @@ class RowChecker:
         ".tar.gz",
         ".fa.gz",
         ".fasta.gz",
-        ".fasta"
+        ".fasta", 
         ".fa"
     )
 
