@@ -12,7 +12,7 @@ process TOTAL_BASES_LR {
     script: 
     def prefix = task.ext.prefix ?: "${meta.id}"
     def herro = "${nanoplot_report}"
-    def auto_herro = herro.contains('herro') ? '7p' : '9p'
+    def auto_herro = herro.contains('herro' || 'hifiasm') ? '7p' : '9p'
     """
     sed -n '${auto_herro}' < $nanoplot_report | awk '{print "\\""\$3"\\""}' | sed -e 's/^"//' -e 's/"\$//' | sed 's/,//g' > ${prefix}_totalBasesLR.txt
     head -1 ${prefix}_totalBasesLR.txt | numfmt --to=si > ${prefix}_totalBasesLR_pretty.txt
