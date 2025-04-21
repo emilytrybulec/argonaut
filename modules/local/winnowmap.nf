@@ -22,13 +22,12 @@ process WINNOWMAP {
     def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
     def read_name = "${reads}"
-    def auto_ont_mode = read_name.contains('ont') ? 'map-ont' : ''
-    def auto_pb_mode = read_name.contains('pb') ? 'map-pb' : ''
+    def auto_ont_mode = read_name.contains('ont') ? 'map-ont' : read_name.contains('pb') ? 'map-pb' : 'map-ont'
     """
     winnowmap \\
       -W $repetitive_txt \\
       -k $kmernum \\
-      -ax ${auto_pb_mode}${auto_ont_mode} \\
+      -ax ${auto_ont_mode} \\
       $reference \\
       $reads > ${prefix}.sam
     """
