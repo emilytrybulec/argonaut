@@ -92,12 +92,13 @@ workflow QC_1 {
             MERYL_COUNT ( fastq_filt, params.kmer_num )
         }
 
-        align_ch
-            .combine(MERYL_COUNT.out.repetitive_k)
-            .set{winnowmap_ch}
+
 
         if (params.longread == true){
             if(params.winnowmap == true){
+                align_ch
+                    .combine(MERYL_COUNT.out.repetitive_k)
+                    .set{winnowmap_ch}
             WINNOWMAP(winnowmap_ch, params.kmer_num)
             ch_sam = WINNOWMAP.out.sam 
 
