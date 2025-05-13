@@ -35,9 +35,8 @@ workflow QC_1 {
             .set{bwa}
 
         BWAMEM2_MEM(bwa, params.samtools_sort)
-        if (params.longread == false){
             ch_align_bam = BWAMEM2_MEM.out.bam
-        } }
+        }
 
         if (params.longread == true){
 
@@ -125,10 +124,7 @@ workflow QC_1 {
 
         } else {racon = Channel.empty()}
 
-    if ( params.longread == true ){
-            SAMTOOLS_INDEX (ch_align_bam)
-    } else if ( params.shortread == true ){ 
-            SAMTOOLS_INDEX (BWAMEM2_MEM.out.bam)}
+        SAMTOOLS_INDEX (ch_align_bam)
         
         ch_sam = SAMTOOLS_INDEX.out.sam
 
