@@ -192,18 +192,18 @@ workflow ASSEMBLY {
         no_meta_assemblies = Channel.empty()
 
         no_meta_assemblies
-            .concat(flye_assembly, canu_assembly, masurca_assembly, hifi_assembly, existing_assembly)
+            .concat(flye_assembly, canu_assembly, masurca_assembly, hifi_assembly)
             .collect()
             .set { all_assemblies_no_meta }
 
         no_meta_assemblies
-            .concat(flye_assembly, canu_assembly, masurca_assembly, hifi_assembly, existing_assembly)
+            .concat(flye_assembly, canu_assembly, masurca_assembly, hifi_assembly)
             .flatten()
             .map { file -> tuple(id: file.simpleName, file) }
             .set { all_assemblies }
 
         no_meta_assemblies
-            .concat(flye_assembly, canu_assembly, masurca_assembly, hifi_assembly, existing_assembly)
+            .concat(flye_assembly, canu_assembly, masurca_assembly, hifi_assembly)
             .set{blob_test}
 
     emit:
