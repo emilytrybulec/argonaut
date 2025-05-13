@@ -380,7 +380,7 @@ workflow GENOMEASSEMBLY {
         ch_polish_pilon
             .map { file -> tuple(id: file.baseName, file)  }
             .set { pilon_meta }  
-        ASSEMBLY.out[4]
+        all_assemblies
             .concat(ch_polish_pilon)
             .flatten()
             .map { file -> tuple(id: file.simpleName, file) }
