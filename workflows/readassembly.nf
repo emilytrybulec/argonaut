@@ -320,15 +320,27 @@ workflow GENOMEASSEMBLY {
     } else {
         sr_assemblies = Channel.empty()
     }
-    
+
+    if ( params.ex_assembly == true ) {
+        println "inputting existing assembly!"
+        existing_assembly = Channel.fromPath(params.existing_assembly)
+
+        existing_assembly
+            .map { file -> tuple(id: file.simpleName, file)  }
+            .set { ex_assembly }
+    } else {
+        ex_assembly = Channel.empty() 
+        existing_assembly = Channel.empty() 
+    }
+
     lr_assemblies
-        .concat(sr_assemblies)
+        .concat(sr_assemblies, existing_assembly)
         .flatten()
         .map { file -> tuple(id: file.simpleName, file) }
         .set{all_assemblies}
 
     lr_assemblies
-        .concat(sr_assemblies)
+        .concat(sr_assemblies, existing_assembly)
         .set{all_assemblies_nm}
 
     if ( params.summary_txt_file == true) {
