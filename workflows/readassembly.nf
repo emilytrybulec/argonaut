@@ -533,7 +533,7 @@ workflow GENOMEASSEMBLY {
             ch_versions = ch_versions.mix(QC_2.out.versions)
         } else if ( params.longread == true && params.shortread == false ) {
             if(params.PacBioHifi_lr == true){
-                QC_2 (polished_assemblies, ch_PacBiolongreads, ch_summtxt, QC_1.out[3], QC_1.out[4], QC_1.out[5], [], QC_1.out[2], full_size, QC_1.out[7], no_meta_ch_PB, QC_1.out[11, QC_1.out[12]])
+                QC_2 (polished_assemblies, ch_PacBiolongreads, ch_summtxt, QC_1.out[3], QC_1.out[4], QC_1.out[5], [], QC_1.out[2], full_size, QC_1.out[7], no_meta_ch_PB, QC_1.out[11], QC_1.out[12])
             } else {
                 QC_2 (polished_assemblies, ch_ONTlongreads, ch_summtxt, QC_1.out[3], QC_1.out[4], QC_1.out[5], [], QC_1.out[2], full_size, QC_1.out[7], no_meta_ch_ONT, QC_1.out[11], QC_1.out[12])}
             ch_versions = ch_versions.mix(QC_2.out.versions)
